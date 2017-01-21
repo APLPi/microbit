@@ -18,7 +18,7 @@
                 tie←dev ⎕NTIE 0
                 device←dev
             :Else
-                (⊃⎕DMX.EN)⎕SIGNAL 11
+                (⊃⎕DMX.DM)⎕SIGNAL 11
             :EndTrap
         :EndIf
     ∇
@@ -30,14 +30,15 @@
         :EndTrap
     ∇
 
-    ∇r←PyREPL cmd
+    ∇r←PyREPL cmd;m
         :Access Public
 
         r←⎕UCS ⍬ (tie tie)⎕ARBIN (⎕UCS cmd),13
+
         :Repeat
             r,←⎕UCS ⍬ (tie tie)⎕ARBIN ⍬
-        :Until '>>> '≡¯4↑r
-        r←(r⍳⎕UCS 10)↓¯6↓r
+        :Until ∨/m←'>>> ' '... '∊⊂¯4↑r
+        r←(r⍳⎕UCS 10)↓(¯6×⊃m)↓r
     ∇
 
 :EndClass
