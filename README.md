@@ -1,6 +1,6 @@
 # APLPi/microbit
 This repository contains tools for using the micro:bit with Dyalog APL
-on the Raspberry Py, with focus on MicroPython.
+on the Raspberry Pi, with focus on MicroPython.
 
 ##The microbit class
 The microbit class provides an interface from Dyalog APL to the MicroPython
@@ -11,4 +11,3 @@ REPL, using serial communications. For example, if you cloned the
         mb←⎕NEW microbit ''
         mb.PyREPL '2+2'
     4
-
