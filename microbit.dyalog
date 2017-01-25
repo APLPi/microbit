@@ -3,7 +3,7 @@
     :Field Public device←'/dev/ttyACM0'
     :Field Public tie←0
 
-    ∇ make dev;cols;i;m;names;nums;s
+    ∇ make dev;cols;i;m;names;nums;r;s
         :Implements Constructor
         :Access Public
 
@@ -21,6 +21,7 @@
                 (⊃⎕DMX.DM)⎕SIGNAL 11
             :EndTrap
         :EndIf
+        r←Clear
     ∇
 
     ∇Unmake
@@ -34,6 +35,7 @@
     ∇r←PyREPL cmd;m
         :Access Public
 
+        r←Clear            ⍝ Empty buffer
         r←Send cmd,⎕UCS 13 ⍝ send command + CR
         r,←Read            ⍝ Read until >>>
     ∇
@@ -47,12 +49,22 @@
     ∇r←Read
         ⍝ Read up to next >>> prompt
         :Access Public
-        
+
         r←''
         :Repeat
             r,←⎕UCS ⍬ (tie tie)⎕ARBIN ⍬
         :Until '>>> '≡¯4↑r
         r←(r⍳⎕UCS 10)↓¯6↓r
+    ∇
+
+    ∇r←Clear;t
+        ⍝ Read everything in the serial input queue
+        :Access Public
+
+        r←''
+        :Repeat
+            r,←t←⎕UCS ⍬ (tie tie)⎕ARBIN ⍬
+        :Until 0=⍴t
     ∇
 
     ∇r←Reset
