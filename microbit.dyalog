@@ -7,15 +7,15 @@
         :Implements Constructor
         :Access Public
 
-        dev,←(0=⍴dev)/device ⍝ default device  
-        (names nums)←⎕NNAMES ⎕NNUMS
-        :If (⍴dev)≤cols←2⊃s←⍴names
+        dev,←(0=⍴dev)/device        ⍝ default device  
+        (names nums)←⎕NNAMES ⎕NNUMS ⍝ open files
+        :If (⍴dev)≤cols←2⊃s←⍴names  ⍝ device already open?
         :AndIf (1⊃s)≥i←(↓names)⍳⊂cols↑dev
-            tie←i⊃⎕NNUMS
+            tie←i⊃⎕NNUMS            ⍝ set handle
             device←dev
-        :Else
+        :Else                       ⍝ not open
             :Trap 0
-                tie←dev ⎕NTIE 0
+                tie←dev ⎕NTIE 0     ⍝ open it
                 device←dev
             :Else
                 (⊃⎕DMX.DM)⎕SIGNAL 11
@@ -26,19 +26,40 @@
     ∇Unmake
         :Implements Destructor
         :Trap 0
-            device ⎕NUNTIE tie
+            device ⎕NUNTIE tie ⍝ close the device
+            tie←0
         :EndTrap
     ∇
 
     ∇r←PyREPL cmd;m
         :Access Public
 
-        r←⎕UCS ⍬ (tie tie)⎕ARBIN (⎕UCS cmd),13
+        r←Send cmd,⎕UCS 13 ⍝ send command + CR
+        r,←Read            ⍝ Read until >>>
+    ∇
 
+    ∇r←Send cmd
+        :Access Public
+
+        r←⎕UCS ⍬ (tie tie)⎕ARBIN ⎕UCS cmd 
+    ∇
+
+    ∇r←Read
+        ⍝ Read up to next >>> prompt
+        :Access Public
+        
+        r←''
         :Repeat
             r,←⎕UCS ⍬ (tie tie)⎕ARBIN ⍬
-        :Until ∨/m←'>>> ' '... '∊⊂¯4↑r
-        r←(r⍳⎕UCS 10)↓(¯6×⊃m)↓r
+        :Until '>>> '≡¯4↑r
+        r←(r⍳⎕UCS 10)↓¯6↓r
     ∇
+
+    ∇r←Reset
+        ⍝ Send CTRL+D for soft reboot
+        :Access Public
+        r←Send ⎕UCS 4 ⍝ CTRL+D = Soft Reboot
+        r,←Read
+    ∇    
 
 :EndClass
