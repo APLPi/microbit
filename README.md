@@ -15,5 +15,5 @@ repository to `/home/pi/microbit` and have started Dyalog APL:
 You can display morse code using the LEDs on the micro:bit using:
 
         ]load /home/pi/microbit/Morse
-        Morse.Init '/home/pi/microbit/MorseCode.txt' ⍝ Read morse data file
+        Morse.Init '/home/pi/microbit/MorseCode.txt'
         Morse.Display 'SOS'
