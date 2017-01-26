@@ -19,6 +19,6 @@ You can display morse code using the LEDs on the micro:bit using the Morse examp
         Morse.Init '/home/pi/microbit/MorseCode.txt'
         Morse.Display 'SOS'
 
-A video of this in action is availble [on YouTube](https://www.youtube.com/watch?v=yfGsSLEifAs).
+A video of this in action is available [on YouTube](https://www.youtube.com/watch?v=yfGsSLEifAs).
 
 More examples to come!
