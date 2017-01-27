@@ -10,6 +10,10 @@
         :Access Public
 
         device←dev,(0=⍴dev)/device ⍝ Default if not provided
+        :if 0≠≢r←SetTTY device 
+            'Unable to create connection: ',r
+                →0
+        :endif
         tie←getFileHandle device   ⍝ What it says 
         r←Reset                    ⍝ Clear the serial buffer
     ∇
@@ -75,6 +79,19 @@
         :EndTrap
     ∇
 
+    ∇r←SetTTY device
+        r←''
+        :If ~⎕nexists device
+            r←'Unable to connect to micro:bit via ',device,': device does not exist or is inaccessable'
+            →0
+        :EndIf
+        :trap 0
+            0 0⍴⎕sh'stty 115200 -parenb -parodd -cmspar cs8 hupcl -cstopb cread clocal -crtscts -ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8 -opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0 -isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke <',device
+            0 0⍴⎕sh'stty min 0 <',device
+        :else
+            r←'Problems setting speed etc of connection to micro:bit via ',device
+        :endtrap
+    ∇
 
     ∇ tie←getFileHandle name;names;nums;cols;s;i
     ⍝ Return handle of file, opening it if necessary
