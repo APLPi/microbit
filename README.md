@@ -4,7 +4,7 @@ on the Raspberry Pi, with focus on MicroPython. Morten Kromberg is blogging abou
 
 ##The microbit class
 The microbit class provides an interface from Dyalog APL to the MicroPython
-REPL, using serial communications. The interface relies on the MicroPython REPL being up and running on the micro:bit. The easiest way to do this is to use the "mu" editor on the Pi to flash a trivial programme to the micro:bit. The file `repl_prompt.py` contains a suitable bit of code which will display a ">>" prompt on the micro:bit display when it is reset (because that looks a bit like the Python >>> prompt).
+REPL, using serial communications. The interface relies on the MicroPython REPL being up and running on the micro:bit. The easiest way to make this happen is to use the "mu" editor on the Pi to compile and "flash" a trivial Python programme to the micro:bit. The file `repl_prompt.py` contains a suitable bit of code which will display a ">>" prompt on the micro:bit display when it is reset (because that looks a bit like the Python >>> prompt). Once this is done, the micro:bit will power up (and can be reset to) a state where you can see the ">>" and the REPL is running.
 
 If you cloned the repository to `/home/pi/microbit` and have started Dyalog APL, you should be able to execute simple Python commands.
 
