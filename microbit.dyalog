@@ -10,7 +10,7 @@
         :Access Public
 
         device←dev,(0=⍴dev)/device ⍝ Default if not provided
-        tie←getFileHandle device   ⍝ What it says 
+        tie←device ⎕NTIE 0         ⍝ Get a file handle 
         r←Reset                    ⍝ Clear the serial buffer
     ∇
 
@@ -68,6 +68,7 @@
         :Access Public
 
         Send ⎕UCS 4 ⍝ CTRL+D = Soft Reboot
+        ⎕DL 0.5       ⍝ Give it half a sec
         :Trap 999
             r←5 ReadUntil '>>> ' ⍝ Allow 5 seconds to get input prompt
         :Else
