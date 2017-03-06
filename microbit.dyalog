@@ -19,7 +19,7 @@
 
     ∇ Unmake
         :Implements Destructor
-        
+
         :Trap 0
             device ⎕NUNTIE tie     ⍝ Close the device
             tie←0
@@ -93,6 +93,33 @@
         :Else
             r←'Problems initialising connection to micro:bit via ',device
         :EndTrap
+    ∇
+
+    ∇{z}←clear_buttons
+        :Access Public
+        z←was_pressed¨'ab'
+    ∇
+
+    ∇ show image;z
+        :Access Public
+        z←PyREPL 'display.show(Image.',image,')'
+    ∇
+
+    ∇ r←is_pressed button
+        :Access Public
+
+        r←is_true 'button_',button,'.is_pressed()'    
+    ∇
+
+    ∇ r←was_pressed button
+        :Access Public
+        r←is_true 'button_',button,'.was_pressed()'    
+    ∇    
+
+    ∇r←is_true expr;t;z
+        :Access Public
+        r←1⊃t←'True' 'False'∊⊂z←PyREPL expr
+        :If ~∨/t ⋄ ⎕←'True/False expected, got: ',z ⋄ ∘∘∘ ⋄ :EndIf
     ∇
 
 :EndClass
