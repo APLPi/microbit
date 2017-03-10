@@ -48,4 +48,31 @@
         ⊖r                           ⍝ low values last (humans!)
     }
 
+    ∇ SPHistogram times;heading;renderHtml;sp;svg;z
+        heading←'Reaction Times'
+        renderHtml←3500⌶ ⍝ Render HTML in Window
+
+        :If 0=⎕NC '#.SharpPlot' ⋄ #.⎕CY 'sharpplot.dws' ⋄ :EndIf
+
+        sp←⎕NEW #.SharpPlot (432 250)
+        sp.Heading←heading
+       
+       ⍝ Draw histogram 
+        sp.ClassInterval←25
+        sp.SetXTickMarks 25
+        sp.HistogramStyle←#.HistogramStyles.SurfaceShading
+        sp.SetFillStyles #.FillStyle.Opacity30
+        sp.DrawHistogram ⊂times
+        
+       ⍝ Add observations using ScatterPlot 
+        sp.SetMarkers #.Marker.UpTick
+        sp.SetPenWidths 1
+        sp.SetMarkerScales 3
+        sp.DrawScatterPlot(times×0)(times)
+       
+       ⍝ Render SVG and display in window
+        svg←sp.RenderSvg #.SvgMode.FixedAspect
+        z←heading renderHtml svg         
+    ∇
+
 :EndNamespace
