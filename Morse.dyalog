@@ -7,7 +7,7 @@
     on←'09990:99999:99999:99999:09990'
     off←29⍴'00000:'
     
-    upcase←1∘(819⌶)           ⍝ Function to convert to Upper Case
+    upcase←1∘⎕C           ⍝ Function to convert to Upper Case
 
     ∇ Init filename;t
     ⍝ Read MorseCode.txt file (actual name passed as argument)
